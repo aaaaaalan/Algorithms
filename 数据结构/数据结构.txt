@@ -1,0 +1,6 @@
+Heap 堆
+
+Each ball is brighter than its children. The brightest ball is at the top.
+
+Trie 字典树
+
