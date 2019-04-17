@@ -1,105 +1,84 @@
-class Node:
-    def __init__(self, dataval=None):
-        self.dataval = dataval
-        self.nextval = None
-        self.previousval = None
+class Node(object):
+    def __init__(self, val):
+        self.val = val
+        self.prev = None
+        self.next = None
 
-class DLinkedList:
-    '''
-    Doubly Linked List Implementation
-    traverse the list in forward direction.
-    print the value of the next data element by assigning the pointer of the next node to the current data element
-    '''
-    def __init__(self):
-        self.headval=None
+class DoublyLinkedList(object):
+    def __init__(self, val):
+        self.head = Node(val)
+    
+    def printList(self):
+        Headval = self.head
+        while Headval is not None:
+            print(Headval.val)
+            Headval = Headval.next    
 
-    def listprint(self):
-        printval = self.headval
-        while printval is not None:
-            print(printval.dataval)
-            printval = printval.nextval
 
-    def AtBeginning(self, newdata):
-        NewNode = Node(newdata)
+    def addInBetween(self, middle_node, value):
+        Newnode = Node(value)
 
-        # Update the new nodes next val to existing head node 
-        NewNode.nextval = self.headval
-        self.headval = NewNode
+        if middle_node.next == None:
+            middle_node.next = Newnode
+            Newnode.prev = middle_node
 
-    def AtEnd(self, newdata):
-        NewNode = Node(newdata)
-        if self.headval is None:
-            self.headval = NewNode
-            return 
-        laste = self.headval
-        while(laste.nextval):
-            laste = laste.nextval
-        laste.nextval=NewNode
+        else: 
+            middle_node_next = middle_node.next
+            middle_node_next.prev = Newnode
+            middle_node.next = Newnode
+            Newnode.prev = middle_node
+            Newnode.next = middle_node_next
 
-    def InBetween(self, middle_node, newdata):
-        if middle_node is None:
-            print("The mentioned node is absent.")
-            return
+    def addAtTail(self, value):
+        Newnode = Node(value)
+        Headval = self.head
+        while Headval.next is not None:
+            Headval = Headval.next
         
-        NewNode = Node(newdata)
-        NewNode.nextval = middle_node.nextval
-        middle_node.nextval = NewNode
+        Headval.next = Newnode
+        Newnode.prev = Headval
 
-    def RemoveNode(self, Removekey):
-        HeadVal = self.headval
+    def delete(self, value):
+        Headval = self.head
+        
+        while Headval.next is not None:
+            if Headval.val == value:
+                Headval_prev = Headval.prev
+                Headval_next = Headval.next
+                Headval_prev.next = Headval.next
+                Headval_next.prev = Headval.prev
+                             
+            Headval = Headval.next
 
-        if HeadVal is not None:
-            if HeadVal.dataval == Removekey:
-                self.headval = HeadVal.nextval
-                HeadVal = None
-                return
+        if Headval.val == value:
+            Headval_prev = Headval.prev
+            Headval_prev.next = None
+            Headval = None
 
-        while HeadVal is not None:
-            if HeadVal.dataval == Removekey:
-                break
-            prev = HeadVal
-            HeadVal = HeadVal.nextval
-
-        if HeadVal == None:
-            return
-      
-        prev.nextval = HeadVal.nextval
-        HeadVal = None
+        
 
 
 
-list1 = SLinkedList()
-list1.headval = Node("Mon")
-e2 = Node("Tue")
-e3 = Node("Wed")
+print('------------------Initialization---------------------')
+l = DoublyLinkedList('Sun')
+l.printList()
 
-# Link first node to the second node
-list1.headval.nextval = e2
+print('------------------Add In Between---------------------')
+l.addInBetween(l.head, 'Mon')
+l.printList()
 
-# LInke second node to the third node
-e2.nextval = e3
+print('------------------Add At Tail------------------------')
+l.addAtTail('Tue')
+l.printList()
 
+print('------------------Add At Tail------------------------')
+l.addAtTail('Wed')
+l.printList()
 
-# Traversing a Linked List
-print("-------------")
-list1.listprint()
+print('------------------Add At Tail------------------------')
+l.addAtTail('Mon')
+l.printList()
 
-# Add node at the beginning
-list1.AtBeginning("Sun")
-print("-------------")
-list1.listprint()
-
-# Add node at the end
-list1.AtEnd("Thu")
-print("-------------")
-list1.listprint()
-
-# Add node in between
-list1.InBetween(list1.headval.nextval, "Fri")
-print("-------------")
-list1.listprint()
-
-# Remove Node Tue
-list1.RemoveNode("Tue")
-print("-------------")
-list1.listprint()
+print('--------------------Delete---------------------------')
+l.delete('Mon')
+l.printList()
