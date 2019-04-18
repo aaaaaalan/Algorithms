@@ -21,6 +21,14 @@ class SinglyLinkedList(object):
             print(Headval.data)
             Headval = Headval.next
         
+    def reversePrintList(self):
+        tail = None
+        while tail is not self.head:
+            curr = self.head
+            while curr.next is not tail:
+                curr = curr.next
+            tail = curr
+            print(tail.data)
 
     def addInBetween(self, middle_node, value):
         if middle_node is None:
@@ -64,6 +72,7 @@ class SinglyLinkedList(object):
                 
         return
             
+        
 
 
 print('----------------- Initialization --------------------')
@@ -86,7 +95,11 @@ l.printList()
 print('---------------- Add At Tail ---------------------')
 l.addAtTail('Tue')
 l.printList()
+print('---------------- Reverse Print -------------------')
+l.reversePrintList()
 
 print('------------------- Delete ---------------------------')
 l.delete('Tue')        # 由于 if return 只能删除第一个Tue
 l.printList()
+print('---------------- Reverse Print -------------------')
+l.reversePrintList()

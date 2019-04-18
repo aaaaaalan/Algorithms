@@ -14,6 +14,15 @@ class DoublyLinkedList(object):
             print(Headval.val)
             Headval = Headval.next    
 
+    def reversePrintList(self):
+        Headval = self.head
+        while Headval.next is not None:
+            Headval = Headval.next
+
+        print(Headval.val)
+        while Headval.prev is not None:
+            print(Headval.prev.val)
+            Headval = Headval.prev
 
     def addInBetween(self, middle_node, value):
         Newnode = Node(value)
@@ -78,7 +87,12 @@ l.printList()
 print('------------------Add At Tail------------------------')
 l.addAtTail('Mon')
 l.printList()
+print('------------------Reverse Print------------------------')
+l.reversePrintList()
 
 print('--------------------Delete---------------------------')
 l.delete('Mon')
 l.printList()
+print('------------------Reverse Print------------------------')
+l.reversePrintList()
+
